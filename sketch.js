@@ -1,89 +1,46 @@
-var trex, trex_running, trex_collided;
-var ground, invisibleGround, groundImage, cloudImage;
+var box
+var marks = [30,35,40,38,31,36,45,47,52,71,86,100]
+var sum = 0
 
-
-
-
-var score;
-
-
-function preload(){
-  trex_running = loadAnimation("trex1.png","trex2.png","trex3.png");
-  trex_collided = loadImage("trex_collided.png");
-  
-  groundImage = loadImage("ground2.png");
-  cloudImage =loadImage ("cloud.png")
- 
-  
+function findAverage () {
+  var sum = marks[0] + marks[1] + marks[2] + marks[3] + marks [4] + marks [5]
+  var avg = sum/marks.length
+  console.log(avg)
 }
 
+//findAverage2();
+
+function findAverage2 () {
+  for (var i = 0; i < marks.length; i = i+1) {
+    console.log (marks [i])
+    sum = sum + marks[i]
+  }
+  console.log(sum)
+  var avg = sum/marks.length
+  console.log (avg)
+}
+
+function findPassingMarks () {
+  for (var i = 0; i < marks.length; i++) {
+    if (marks[i] >= 45) {
+      console.log (marks[i])
+    }
+  }
+}
+
+findPassingMarks();
+
+
 function setup() {
-
-  createCanvas(600,200)
-  
-  //create a trex sprite
-  trex = createSprite(50,160,20,50);
-  trex.addAnimation("running", trex_running);
-  trex.scale = 0.5;
-  
-  //create a ground sprite
-  ground = createSprite(200,180,400,20);
-  ground.addImage("ground",groundImage);
-  ground.x = ground.width /2;
-  ground.velocityX = -4;
-  
-  //creating invisible ground
-  invisibleGround = createSprite(200,190,400,10);
-  invisibleGround.visible = false;
-  
-  //generate random numbers
-  var rand =  Math.round(random(1,100))
-  console.log(rand)
-
+  createCanvas(400,400);
+  box = createSprite (200,200,35,45);
+  box.shapeColor = "red"
 }
 
 function draw() {
-  //set background color
-  background(180);
-  
-  console.log(trex.y)
-  
-  
-  
-  // jump when the space key is pressed
-  if(keyDown("space")&& trex.y >= 100) {
-    trex.velocityY = -10;
-  }
-  
-  trex.velocityY = trex.velocityY + 0.8
-  
-  if (ground.x < 0){
-    ground.x = ground.width/2;
-  }
-  
-  //stop trex from falling down
-  trex.collide(invisibleGround);
-  
-  //Spawn Clouds
-  spawnClouds()
-  
-  drawSprites();
+drawSprites();
 }
 
-//function to spawn the clouds
-function spawnClouds(){
- // write your code here 
- if (frameCount % 60 == 0) {
-  var cloud
-  cloud = createSprite (600,100,40,10)
-  cloud.addImage(cloudImage)
-  cloud.y = Math.round (random (10,100))
-  cloud.velocityX= -4
-  cloud.scale = 0.4
-  cloud.depth = trex.depth
-  trex.depth = trex.depth + 1
- }
-}
-
+ 
 
 
